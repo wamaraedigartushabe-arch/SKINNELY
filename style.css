@@ -1,0 +1,387 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #f5f8f3;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    color: rgba(28, 216, 11, 0.932);
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #333;
+}
+
+nav {
+    background-color: darkgreen;
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+nav a:hover {
+    color: lightgreen;
+    transition: color 0.3s ease;
+}
+
+.hero {
+    background-color: white;
+    padding: 40px;
+    text-align: center;
+    margin: 30px;
+    border-radius: 15px;
+}
+
+.hero h2 {
+    color: darkgreen;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.hero button,
+.explore-button {
+    display: inline-block;
+    background-color: darkgreen;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.hero button:hover,
+.explore-button:hover {
+    background-color: lightgreen;
+    color: darkgreen;
+}
+
+.products {
+    background-color: white;
+    padding: 25px;
+    margin: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.products h2 {
+    color: darkgreen;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    align-items: stretch;
+}
+
+.product-card {
+    background-color: white;
+    color: darkgreen;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    gap: 12px;
+    font-weight: bold;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.product-card img:hover {
+    transform: scale(1.05);
+}
+
+.product-card h3 {
+    color: darkgreen;
+    font-size: 20px;
+    text-transform: capitalize;
+    margin-bottom: 8px;
+}
+
+.product-card p {
+    color: #555555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.price {
+    color: darkgreen;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+.product-card button {
+    background-color: darkgreen;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+.product-card button:hover {
+    background-color: lightgreen;
+    color: darkgreen;
+}
+
+.about {
+    background-color: white;
+    padding: 40px 20px;
+    margin: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.about h2 {
+    color: darkgreen;
+    margin-bottom: 15px;
+}
+
+.about p {
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.testimonials {
+    background-color: white;
+    padding: 40px 20px;
+    margin: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.testimonials h2 {
+    color: darkgreen;
+    margin-bottom: 25px;
+}
+
+.testimonial-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.testimonial-card {
+    background-color: #f5f8f3;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.testimonial-card h3 {
+    color: darkgreen;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.testimonial-card p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.testimonial-card span {
+    display: block;
+    color: goldenrod;
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.newsletter {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.newsletter input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+.newsletter button {
+    background-color: darkgreen;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.newsletter button:hover {
+    background-color: lightgreen;
+    color: darkgreen;
+}
+
+.footer {
+    background-color: white;
+    margin-top: 30px;
+    padding: 40px 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    text-align: center;
+}
+
+.footer-section h2,
+.footer-section h3 {
+    color: darkgreen;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.footer-section a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.footer-section a:hover {
+    color: lightgreen;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid lightgreen;
+    margin-top: 30px;
+    padding-top: 15px;
+    color: #555;
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonial-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonial-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        margin: 20px 15px;
+        padding: 25px 20px;
+    }
+
+    .products {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .about {
+        margin: 15px;
+        padding: 25px 20px;
+    }
+
+    .testimonials {
+        margin: 15px;
+        padding: 30px 20px;
+    }
+
+    .nav a {
+        margin: 0 8px;
+        font-size: 14px;
+    }
+
+    .newsletter {
+        flex-direction: column;
+    }
+
+    .newsletter input,
+    .newsletter button {
+        width: 100%;
+    }
+}
