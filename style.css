@@ -1,387 +1,520 @@
+
+/* ==================================
+   1. GLOBAL STYLES
+================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    background-color: #f5f8f3;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     line-height: 1.6;
+    color: #333;
+    background: #f9faf8;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+/* ==================================
+   2. HEADER AND NAVIGATION
+================================== */
 
 header {
+    background: #ffffff;
+    padding: 1rem;
     text-align: center;
-    padding: 20px;
+    border-bottom: 1px solid #ddd;
 }
 
 header h1 {
-    color: rgba(28, 216, 11, 0.932);
-    margin-bottom: 10px;
-}
-
-header p {
-    color: #333;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: darkgreen;
 }
 
 nav {
-    background-color: darkgreen;
-    padding: 15px;
-    text-align: center;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
 }
 
 nav a {
-    color: white;
     text-decoration: none;
-    margin: 0 15px;
+    color: #333;
     font-weight: bold;
-    display: inline-block;
-}
-
-nav a:hover {
-    color: lightgreen;
     transition: color 0.3s ease;
 }
 
+nav a:hover {
+    color: #28a745;
+}
+
+/* ==================================
+   3. HERO SECTION
+================================== */
+
 .hero {
-    background-color: white;
-    padding: 40px;
+    padding: 3rem 2rem;
     text-align: center;
-    margin: 30px;
-    border-radius: 15px;
+    background: #f0f7ed;
 }
 
 .hero h2 {
-    color: darkgreen;
-    margin-bottom: 15px;
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
 .hero p {
-    color: #555;
-    margin-bottom: 25px;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
 }
 
-.hero button,
 .explore-button {
     display: inline-block;
-    background-color: darkgreen;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    background: darkgreen;
+    color: #fff;
     text-decoration: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    border-radius: 6px;
+    transition: background 0.3s ease;
 }
 
-.hero button:hover,
 .explore-button:hover {
-    background-color: lightgreen;
-    color: darkgreen;
+    background: #218838;
 }
+
+/* ==================================
+   4. PRODUCTS SECTION
+================================== */
 
 .products {
-    background-color: white;
-    padding: 25px;
-    margin: 20px;
-    border-radius: 12px;
-    text-align: center;
+    padding: 3rem 2rem;
 }
 
 .products h2 {
-    color: darkgreen;
-    font-size: 24px;
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .product-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-    align-items: stretch;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .product-card {
-    background-color: white;
-    color: darkgreen;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    gap: 12px;
-    font-weight: bold;
-    width: 100%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e5e5e5;
+    padding: 1.2rem;
+    border-radius: 12px;
+    background: #fff;
     display: flex;
     flex-direction: column;
+    gap: 0.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
 }
 
 .product-card img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: contain;
-    display: block;
-    transition: transform 0.3s ease;
-    margin-bottom: 10px;
-}
-
-.product-card img:hover {
-    transform: scale(1.05);
+    border-radius: 8px;
 }
 
 .product-card h3 {
-    color: darkgreen;
-    font-size: 20px;
-    text-transform: capitalize;
-    margin-bottom: 8px;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
 }
 
 .product-card p {
-    color: #555555;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #555;
 }
 
 .price {
-    color: darkgreen;
     font-weight: bold;
-    font-size: 18px;
-    margin-top: 5px;
-    margin-bottom: 12px;
+    color: darkgreen;
+    margin-bottom: 0.5rem;
 }
 
-.product-card button {
-    background-color: darkgreen;
-    color: white;
-    padding: 10px 20px;
+/* ==================================
+   5. PRODUCT BUTTONS
+================================== */
+
+.view-details,
+.add-to-cart {
+    padding: 0.7rem 1rem;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
-    width: 100%;
+    font-size: 0.95rem;
+    transition: background 0.3s ease;
 }
 
-.product-card button:hover {
-    background-color: lightgreen;
+.view-details {
+    background: #f0f0f0;
+    color: #333;
+    margin-right: 0.5rem;
+}
+
+.view-details:hover {
+    background: #ddd;
+}
+
+.add-to-cart {
+    background: #28a745;
+    color: #fff;
+}
+
+.add-to-cart:hover {
+    background: #218838;
+}
+
+/* ==================================
+   6. SHOPPING CART
+================================== */
+
+.cart-summary {
+    background: #ffffff;
+    max-width: 800px;
+    width: 92%;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.cart-summary h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
     color: darkgreen;
 }
 
+.cart-summary p {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+#cartItems {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+#cartItems > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#cartItems span {
+    color: #333;
+}
+
+#cartItems button {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#cartItems button:hover {
+    background: #b02a37;
+}
+
+.cart-summary h3:last-child {
+    margin-top: 25px;
+    font-size: 22px;
+    text-align: right;
+    color: darkgreen;
+}
+
+/* ==================================
+   7. ABOUT SECTION
+================================== */
+
 .about {
-    background-color: white;
-    padding: 40px 20px;
-    margin: 20px;
-    border-radius: 12px;
+    padding: 3rem 2rem;
     text-align: center;
 }
 
 .about h2 {
-    color: darkgreen;
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
 
-.about p {
-    color: #555;
-    max-width: 700px;
-    margin: 0 auto;
-}
+/* ==================================
+   8. TESTIMONIALS
+================================== */
 
 .testimonials {
-    background-color: white;
-    padding: 40px 20px;
-    margin: 20px;
-    border-radius: 12px;
+    padding: 3rem 2rem;
+    background: #f0f7ed;
     text-align: center;
 }
 
 .testimonials h2 {
-    color: darkgreen;
-    margin-bottom: 25px;
+    margin-bottom: 1.5rem;
 }
 
 .testimonial-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
 }
 
 .testimonial-card {
-    background-color: #f5f8f3;
-    padding: 25px;
-    border-radius: 10px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #fff;
+    max-width: 300px;
 }
 
 .testimonial-card h3 {
-    color: darkgreen;
-    margin-bottom: 15px;
-    font-size: 18px;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .testimonial-card p {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 15px;
+    font-style: italic;
+    margin-bottom: 0.5rem;
 }
 
 .testimonial-card span {
-    display: block;
-    color: goldenrod;
-    margin-top: 15px;
-    font-size: 20px;
+    color: #ffc107;
 }
+
+/* ==================================
+   9. NEWSLETTER
+================================== */
 
 .newsletter {
+    margin-top: 1rem;
     display: flex;
-    gap: 8px;
-    margin-top: 15px;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.newsletter input {
-    flex: 1;
-    padding: 10px;
+.newsletter input[type="email"] {
+    padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 6px;
-    font-family: inherit;
 }
 
-.newsletter button {
-    background-color: darkgreen;
-    color: white;
-    padding: 10px 20px;
+.newsletter button[type="submit"] {
+    padding: 0.75rem;
+    background: darkgreen;
+    color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-.newsletter button:hover {
-    background-color: lightgreen;
-    color: darkgreen;
+.newsletter button[type="submit"]:hover {
+    background: #218838;
 }
+
+/* ==================================
+   10. FOOTER
+================================== */
 
 .footer {
-    background-color: white;
-    margin-top: 30px;
-    padding: 40px 20px;
+    background: #26332b;
+    color: #fff;
+    padding: 2rem;
+    margin-top: 2rem;
 }
 
 .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
 }
 
 .footer-section h2,
 .footer-section h3 {
-    color: darkgreen;
-    margin-bottom: 15px;
-}
-
-.footer-section p {
-    color: #555;
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
+    color: #fff;
 }
 
 .footer-section a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .footer-section a:hover {
-    color: lightgreen;
+    text-decoration: underline;
 }
 
 .footer-bottom {
     text-align: center;
-    border-top: 1px solid lightgreen;
-    margin-top: 30px;
-    padding-top: 15px;
-    color: #555;
-    font-size: 14px;
+    padding-top: 1rem;
+    border-top: 1px solid #555;
+    font-size: 0.9rem;
 }
 
-@media (max-width: 900px) {
-    .product-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* ==================================
+   11. PRODUCT DETAILS MODAL
+================================== */
 
-    .testimonial-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .footer-container {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        text-align: center;
-    }
+.product-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
 
-@media (max-width: 600px) {
-    .product-container {
-        grid-template-columns: 1fr;
+.product-modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+/* ==================================
+   12. TABLET RESPONSIVENESS
+================================== */
+
+@media (max-width: 768px) {
+
+    nav {
+        flex-wrap: wrap;
+        gap: 0.75rem;
     }
 
-    .testimonial-container {
-        grid-template-columns: 1fr;
+    nav a {
+        font-size: 1rem;
     }
 
     .hero {
-        margin: 20px 15px;
-        padding: 25px 20px;
+        padding: 2rem 1.5rem;
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
     }
 
     .products {
-        margin: 15px;
-        padding: 20px;
+        padding: 2rem 1rem;
     }
 
-    .about {
-        margin: 15px;
-        padding: 25px 20px;
+    .product-container {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .testimonials {
-        margin: 15px;
-        padding: 30px 20px;
+    .cart-summary {
+        max-width: 100%;
+        padding: 1.5rem;
     }
 
-    .nav a {
-        margin: 0 8px;
-        font-size: 14px;
-    }
-
-    .newsletter {
-        flex-direction: column;
-    }
-
-    .newsletter input,
-    .newsletter button {
-        width: 100%;
+    .modal-content {
+        width: 90%;
+        padding: 1rem;
     }
 }
+
+/* ==================================
+   13. MOBILE RESPONSIVENESS
+================================== */
+
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 1.6rem;
+    }
+
+    nav {
+        gap: 0.75rem;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+    }
+
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .hero h2 {
+        font-size: 1.4rem;
+    }
+
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+
+    .product-card img {
+        height: 200px;
+    }
+
+    .cart-summary {
+        width: 92%;
+        padding: 1.2rem;
+    }
+
+    #cartItems > div {
+        flex-wrap: wrap;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-section {
+        min-width: 100%;
+    }
+}
+
+
