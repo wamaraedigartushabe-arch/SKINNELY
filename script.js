@@ -3,27 +3,20 @@
 // NIA SKIN - JAVASCRIPT
 // ==========================================
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
-    // ======================================
     // 1. WELCOME MESSAGE
-    // ======================================
 
     alert("Welcome to NIA SKIN");
 
 
-    // ======================================
     // 2. PRODUCT DETAILS MODAL
-    // ======================================
 
     const buttons = document.querySelectorAll(".view-details");
 
     const modal = document.getElementById("productModal");
-
     const modalTitle = document.getElementById("modalTitle");
-
     const modalDescription = document.getElementById("modalDescription");
-
     const closeButton = document.getElementById("closeModal");
 
     const products = {
@@ -32,17 +25,23 @@ document.addEventListener("DOMContentLoaded", function() {
         Sunscreen: "Helps to protect skin from UV exposure."
     };
 
+    function closeModal() {
+        if (modal) {
+            modal.classList.remove("show");
+        }
+    }
 
-    // Open product details
+    buttons.forEach(function (button) {
 
-    buttons.forEach(function(button) {
-
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
 
             const productName = button.dataset.product;
 
-            modalTitle.textContent = productName;
+            if (!products[productName] || !modal) {
+                return;
+            }
 
+            modalTitle.textContent = productName;
             modalDescription.textContent = products[productName];
 
             modal.classList.add("show");
@@ -51,63 +50,148 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
+    if (closeButton) {
+        closeButton.addEventListener("click", closeModal);
+    }
 
-    // Close modal using close button
+    if (modal) {
 
-    closeButton.addEventListener("click", function() {
+        modal.addEventListener("click", function (event) {
 
-        modal.classList.remove("show");
+            if (event.target === modal) {
+                closeModal();
+            }
 
-    });
+        });
 
+    }
 
-    // Close modal by clicking outside the content
+    document.addEventListener("keydown", function (event) {
 
-    modal.addEventListener("click", function(event) {
-
-        if (event.target === modal) {
-
-            modal.classList.remove("show");
-
+        if (event.key === "Escape") {
+            closeModal();
         }
 
     });
 
 
-    // ======================================
-    // 3. SHOPPING CART
-    // ======================================
+    // 3. SHOPPING CART ELEMENTS
 
     const cartButtons = document.querySelectorAll(".add-to-cart");
 
     const cartCount = document.getElementById("cartCount");
-
     const cartItems = document.getElementById("cartItems");
-
     const cartTotal = document.getElementById("cartTotal");
 
-
-    // Load previously saved cart
-
-    let cart = JSON.parse(localStorage.getItem("niaCart")) || [];
+    const clearCartButton = document.getElementById("clearCart");
 
 
-    // Add products to cart
+    // 4. CHECKOUT ELEMENTS
 
-    cartButtons.forEach(function(button) {
+    const checkoutButton = document.getElementById("checkoutButton");
+    const checkoutSection = document.getElementById("checkoutSection");
+    const checkoutForm = document.getElementById("checkoutForm");
 
-        button.addEventListener("click", function() {
+    const checkoutItems = document.getElementById("checkoutItems");
+    const checkoutTotal = document.getElementById("checkoutTotal");
+
+
+    // 5. LOAD AND VALIDATE SAVED CART
+
+    let cart = [];
+
+    try {
+
+        const savedCart = JSON.parse(
+            localStorage.getItem("niaCart")
+        );
+
+        if (Array.isArray(savedCart)) {
+
+            cart = savedCart
+                .filter(function (product) {
+
+                    return (
+                        product &&
+                        typeof product.name === "string" &&
+                        Number.isFinite(Number(product.price)) &&
+                        Number(product.price) > 0
+                    );
+
+                })
+                .map(function (product) {
+
+                    return {
+                        name: product.name,
+                        price: Number(product.price),
+                        quantity:
+                            Number.isInteger(Number(product.quantity)) &&
+                            Number(product.quantity) > 0
+                                ? Number(product.quantity)
+                                : 1
+                    };
+
+                });
+
+        }
+
+    } catch (error) {
+
+        console.error("Could not load saved cart:", error);
+
+        cart = [];
+
+    }
+
+
+    // 6. FORMAT TANZANIAN CURRENCY
+
+    function formatPrice(amount) {
+
+        return Number(amount).toLocaleString("en-TZ");
+
+    }
+
+
+    // 7. ADD PRODUCTS TO CART
+
+    cartButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
 
             const productName = button.dataset.product;
-
             const productPrice = Number(button.dataset.price);
 
-            const product = {
-                name: productName,
-                price: productPrice
-            };
+            if (
+                !productName ||
+                !Number.isFinite(productPrice) ||
+                productPrice <= 0
+            ) {
+                alert("Invalid product information.");
+                return;
+            }
 
-            cart.push(product);
+            const existingProduct = cart.find(function (product) {
+
+                return product.name === productName;
+
+            });
+
+            if (existingProduct) {
+
+                existingProduct.quantity++;
+
+            } else {
+
+                cart.push({
+
+                    name: productName,
+                    price: productPrice,
+                    quantity: 1
+
+                });
+
+            }
 
             updateCart();
 
@@ -116,58 +200,222 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // Update shopping cart
+    // 8. CLEAR ENTIRE SHOPPING CART
+
+    if (clearCartButton) {
+
+        clearCartButton.addEventListener("click", function () {
+
+            cart = [];
+
+            updateCart();
+
+        });
+
+    }
+
+
+    // 9. OPEN CHECKOUT
+
+    if (checkoutButton) {
+
+        checkoutButton.addEventListener("click", function () {
+
+            if (cart.length === 0) {
+
+                alert("Your shopping cart is empty!");
+
+                return;
+
+            }
+
+            updateCheckoutSummary();
+
+            if (checkoutSection) {
+
+                checkoutSection.classList.add("show");
+
+                checkoutSection.scrollIntoView({
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+        });
+
+    }
+
+
+    // 10. PROCESS CUSTOMER ORDER
+
+    if (checkoutForm) {
+
+        checkoutForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            if (cart.length === 0) {
+
+                alert("Your shopping cart is empty!");
+
+                return;
+
+            }
+
+            const customerName =
+                document.getElementById("customerName").value.trim();
+
+            const customerPhone =
+                document.getElementById("customerPhone").value.trim();
+
+            const customerAddress =
+                document.getElementById("customerAddress").value.trim();
+
+            let orderTotal = 0;
+
+            cart.forEach(function (product) {
+
+                orderTotal += product.price * product.quantity;
+
+            });
+
+            alert(
+
+                "Thank you, " + customerName + "!\n\n" +
+
+                "Your order has been received.\n" +
+
+                "Phone: " + customerPhone + "\n" +
+
+                "Delivery Address: " + customerAddress + "\n" +
+
+                "Total: TZS " + formatPrice(orderTotal)
+
+            );
+
+            cart = [];
+
+            updateCart();
+
+            checkoutForm.reset();
+
+            if (checkoutSection) {
+                checkoutSection.classList.remove("show");
+            }
+
+        });
+
+    }
+
+
+    // 11. UPDATE SHOPPING CART
 
     function updateCart() {
 
-        // Save cart in browser storage
-
         localStorage.setItem("niaCart", JSON.stringify(cart));
 
+        if (!cartCount || !cartItems || !cartTotal) {
+            return;
+        }
 
-        // Update number of products
+        let itemCount = 0;
+        let total = 0;
 
-        cartCount.textContent = cart.length;
+        cart.forEach(function (product) {
 
+            itemCount += product.quantity;
 
-        // Clear previous cart display
+            total += product.price * product.quantity;
+
+        });
+
+        cartCount.textContent = itemCount;
+
+        cartTotal.textContent = formatPrice(total);
 
         cartItems.innerHTML = "";
 
 
-        // Calculate total price
+        // DISPLAY EACH PRODUCT
 
-        let total = 0;
-
-
-        cart.forEach(function(product, index) {
-
-            total += product.price;
-
-
-            // Create cart item container
+        cart.forEach(function (product, index) {
 
             const item = document.createElement("div");
 
-
-            // Create product name and price
-
             const productName = document.createElement("span");
 
-            productName.textContent = product.name + " - TZS " +
-                product.price.toLocaleString("en-TZ");
+            productName.textContent =
+
+                product.name + " - TZS " +
+
+                formatPrice(product.price) +
+
+                " x " + product.quantity;
 
 
-            // Create remove button
+            // INCREASE QUANTITY
+
+            const increaseButton = document.createElement("button");
+
+            increaseButton.type = "button";
+
+            increaseButton.textContent = "+";
+
+            increaseButton.setAttribute(
+                "aria-label",
+                "Increase " + product.name + " quantity"
+            );
+
+            increaseButton.addEventListener("click", function () {
+
+                product.quantity++;
+
+                updateCart();
+
+            });
+
+
+            // DECREASE QUANTITY
+
+            const decreaseButton = document.createElement("button");
+
+            decreaseButton.type = "button";
+
+            decreaseButton.textContent = "-";
+
+            decreaseButton.setAttribute(
+                "aria-label",
+                "Decrease " + product.name + " quantity"
+            );
+
+            decreaseButton.addEventListener("click", function () {
+
+                if (product.quantity > 1) {
+
+                    product.quantity--;
+
+                } else {
+
+                    cart.splice(index, 1);
+
+                }
+
+                updateCart();
+
+            });
+
+
+            // REMOVE PRODUCT
 
             const removeButton = document.createElement("button");
 
+            removeButton.type = "button";
+
             removeButton.textContent = "Remove";
 
-
-            // Remove selected product
-
-            removeButton.addEventListener("click", function() {
+            removeButton.addEventListener("click", function () {
 
                 cart.splice(index, 1);
 
@@ -176,9 +424,13 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
 
-            // Add elements to cart
+            // ADD ELEMENTS TO CART
 
             item.appendChild(productName);
+
+            item.appendChild(increaseButton);
+
+            item.appendChild(decreaseButton);
 
             item.appendChild(removeButton);
 
@@ -187,34 +439,87 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
 
-        // Display total price
+        // KEEP CHECKOUT SUMMARY UPDATED
 
-        cartTotal.textContent = total.toLocaleString("en-TZ");
+        if (
+            checkoutSection &&
+            checkoutSection.classList.contains("show")
+        ) {
+
+            updateCheckoutSummary();
+
+        }
 
     }
 
 
-    // Display saved cart when page loads
+    // 12. UPDATE CHECKOUT SUMMARY
+
+    function updateCheckoutSummary() {
+
+        if (!checkoutItems || !checkoutTotal) {
+            return;
+        }
+
+        checkoutItems.innerHTML = "";
+
+        let total = 0;
+
+        cart.forEach(function (product) {
+
+            const subtotal = product.price * product.quantity;
+
+            total += subtotal;
+
+            const item = document.createElement("p");
+
+            item.textContent =
+
+                product.name + " x " +
+
+                product.quantity + " = TZS " +
+
+                formatPrice(subtotal);
+
+            checkoutItems.appendChild(item);
+
+        });
+
+        checkoutTotal.textContent = formatPrice(total);
+
+    }
+
+
+    // 13. DISPLAY SAVED CART WHEN PAGE LOADS
 
     updateCart();
 
 
-    // ======================================
-    // 4. NEWSLETTER
-    // ======================================
+    // 14. NEWSLETTER
 
     const newsletterForm = document.querySelector(".newsletter");
 
-
     if (newsletterForm) {
 
-        newsletterForm.addEventListener("submit", function(event) {
+        newsletterForm.addEventListener("submit", function (event) {
 
             event.preventDefault();
 
-            const emailInput = this.querySelector('input[type="email"]');
+            const emailInput = this.querySelector(
+                'input[type="email"]'
+            );
 
-            alert("Thank you for joining NIA SKIN, " + emailInput.value + "!");
+            if (!emailInput || !emailInput.value.trim()) {
+                return;
+            }
+
+            alert(
+
+                "Thank you for joining NIA SKIN, " +
+
+                emailInput.value + "!"
+
+            );
 
             emailInput.value = "";
 
@@ -222,10 +527,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 
-
-    // ======================================
-    // END OF NIA SKIN JAVASCRIPT
-    // ======================================
-
 });
-
